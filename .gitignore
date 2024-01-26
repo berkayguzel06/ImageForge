@@ -1,0 +1,6 @@
+.venv
+__pycache__
+*.safetensors
+images
+*.conv
+.cache
