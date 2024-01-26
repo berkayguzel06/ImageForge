@@ -25,5 +25,5 @@ A browser interface based on Gradio library for Stable Diffusion.
 ## Automatic Installation on Windows
 1. Install Python 3.10.6 (Newer version of Python does not support torch), checking "Add Python to PATH".
 2. Install git.
-3. Download the ImageForge repository, for example by running git clone https://github.com/yourusername/yourproject.git.
+3. Download the ImageForge repository, for example by running git clone https://github.com/berkayguzel06/ImageForge.git.
 4. Run start-browser.bat from Windows Explorer as normal, non-administrator, user.
