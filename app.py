@@ -55,7 +55,7 @@ with gr.Blocks() as interface:
     with gr.Tabs():
         with gr.TabItem("Text2Img"):
             with gr.Blocks():
-                selected_model = gr.Dropdown(converted, value=converted[1], label="Models", info="You can select desired models here")
+                selected_model = gr.Dropdown(converted, value=converted[0], label="Models", info="You can select desired models here")
 
             with gr.Group():
                 with gr.Row():
