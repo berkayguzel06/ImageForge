@@ -71,7 +71,7 @@ with gr.Blocks() as interface:
                         clip_skip = gr.Slider(minimum=1, maximum=4, label="Click Skip")
                         batch_size = gr.Slider(minimum=1, maximum=50, label="Batch Size")
                         num_inference_steps = gr.Slider(minimum=1, value=20, label="Num Inference Steps")
-                        guidance_scale = gr.Slider(minimum=1, maximum=8, value=20 ,label="Guidance Scale")
+                        guidance_scale = gr.Slider(minimum=1, maximum=10, value=7.5 ,label="Guidance Scale")
                     images = gr.Gallery(label="Generated images", show_label=False, columns=[3], rows=[1], object_fit="contain", height="auto")
 
         with gr.TabItem("Model Converter"):
