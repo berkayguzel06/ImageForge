@@ -51,7 +51,7 @@ def convert_model(safetensor_model):
     std.convert(model_path=safetensor_model)
 
 
-with gr.Blocks() as interface:
+with gr.Blocks(title="ImageForge") as interface:
     with gr.Tabs():
         with gr.TabItem("Text2Img"):
             with gr.Blocks():
@@ -84,4 +84,4 @@ with gr.Blocks() as interface:
     convert_button.click(convert_model, inputs=safetensor_model)
     live=True
 
-interface.launch()
+interface.launch(inbrowser=True)

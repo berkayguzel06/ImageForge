@@ -18,7 +18,8 @@ def convert(model_path):
     model_name = model_name+extension
     out_path = os.path.join(model_place,model_name)
     print(f"{model_path} converting to diffusers in {out_path} as {model_name}.")
-    pipe = diffusers.StableDiffusionPipeline.from_single_file(model_path, cache_dir=cache_dir, torch_dtype = dtype)
+    pipe = diffusers.StableDiffusionPipeline.from_single_file(model_path, cache_dir=cache_dir,
+                                                              torch_dtype = dtype, use_safetensors=True)
     pipe = pipe.to(device)
     pipe.save_pretrained(out_path, safe_serialization=True)
     print("Model created.")
