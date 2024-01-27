@@ -1,6 +1,4 @@
 # ImageForge
-
-A browser interface based on Gradio library for Stable Diffusion.
 ![image](https://github.com/berkayguzel06/ImageForge/assets/98205992/63136c33-d867-4553-8d5f-dbf9d0aeeb76)
 
 ## Features
