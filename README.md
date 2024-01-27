@@ -1,7 +1,7 @@
 # ImageForge
 
 A browser interface based on Gradio library for Stable Diffusion.
-![WhatsApp Görsel 2024-01-26 saat 20 43 14_8562cf87](https://github.com/berkayguzel06/ImageForge/assets/98205992/c58d0302-52f6-4fcb-9b54-7baf677b20b0)
+![image](https://github.com/berkayguzel06/ImageForge/assets/98205992/63136c33-d867-4553-8d5f-dbf9d0aeeb76)
 
 ## Features
 
