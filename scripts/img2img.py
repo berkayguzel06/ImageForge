@@ -6,15 +6,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scripts.pipe_engine import pipeline
 
-class t2i:
+class i2i:
     def __init__(self):
         self.pipe = pipeline()
         self.device_name = self.pipe.device_name
         self.torch_dtype = self.pipe.torch_dtype
 
-    def generate_image(self, selected_model, prompt, batch_size, num_inference_steps, guidance_scale, negative_prompt, width, height, clip_skip):
-            pipe_type = "t2i"
-
+    def generate_image(self, image, selected_model, prompt, batch_size, num_inference_steps, guidance_scale, negative_prompt, width, height, clip_skip, strength):
+            pipe_type = "i2i"
+            
             self.pipe.system_check(pipe_type, clip_skip, selected_model)
             diffuser_pipe = self.pipe.get_pipe()
 
@@ -37,12 +37,14 @@ class t2i:
                 "num_inference_steps":num_inference_steps,
                 "guidance_scale":guidance_scale,
                 "width":width,
-                "height":height
+                "height":height,
+                "strength":strength
             }
             images = []
             for count, seed in enumerate(seeds):
                 if use_prompt_embeddings is False:
                     new_img = diffuser_pipe(
+                        image=image,
                         prompt = prompt,
                         negative_prompt = negative_prompt,
                         width = width,
@@ -50,10 +52,12 @@ class t2i:
                         guidance_scale = guidance_scale,
                         num_inference_steps = num_inference_steps,
                         num_images_per_prompt = 1,
+                        strength=strength,
                         generator = torch.manual_seed(seed),
                     ).images
                 else:
                     new_img = diffuser_pipe(
+                        image=image,
                         prompt_embeds = prompt_embeds,
                         negative_prompt_embeds = negative_prompt_embeds,
                         width = width,
@@ -61,6 +65,7 @@ class t2i:
                         guidance_scale = guidance_scale,
                         num_inference_steps = num_inference_steps,
                         num_images_per_prompt = 1,
+                        strength=strength,
                         generator = torch.manual_seed(seed),
                     ).images
 
