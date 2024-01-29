@@ -4,7 +4,7 @@ from scripts.text2img import t2i
 from scripts.img2img import i2i
 import scripts.safetensors_to_diffusers as std
 import scripts.image_convertions as img_conv
-from PIL import Image
+
 text2img = t2i()
 img2img = i2i()
 images  = ""
@@ -95,10 +95,6 @@ with gr.Blocks(title="ImageForge") as interface:
                     images = gr.Gallery(label="Generated images", show_label=False, columns=[3], rows=[1], object_fit="contain", height="auto")
             generate_button.click(generate_image, inputs=[selected_model, prompt, negative_prompt, clip_skip, batch_size, 
                                num_inference_steps, guidance_scale, width, height], outputs=images)
-        with gr.TabItem("Model Converter"):
-            with gr.Blocks():
-                safetensor_model = gr.Dropdown(safetensor, label="Safetensors", info="You can select a model to turn diffusers")
-                convert_button = gr.Button(value="Convert")
         
         with gr.TabItem("Img2Img"):
             with gr.Group():
@@ -119,10 +115,13 @@ with gr.Blocks(title="ImageForge") as interface:
                         i2i_guidance_scale = gr.Slider(minimum=1, maximum=10, value=7.5 ,label="Guidance Scale")
                         i2i_strength = gr.Slider(minimum=0, value=0.8, maximum=1, label="Strength")
                     i2i_images = gr.Gallery(label="Generated images", show_label=False, columns=[3], rows=[1], object_fit="contain", height="auto")
-
             i2i_generate_button.click(i2i_generate_image, inputs=[selected_model, i2i_prompt, i2i_negative_prompt, i2i_clip_skip, i2i_batch_size, 
                                i2i_num_inference_steps, i2i_guidance_scale, i2i_width, i2i_height, i2i_strength, img], outputs=i2i_images)
     
+        with gr.TabItem("Model Converter"):
+            with gr.Blocks():
+                safetensor_model = gr.Dropdown(safetensor, label="Safetensors", info="You can select a model to turn diffusers")
+                convert_button = gr.Button(value="Convert")
     
     convert_button.click(convert_model, inputs=safetensor_model)
 

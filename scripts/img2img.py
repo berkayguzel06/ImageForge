@@ -19,7 +19,7 @@ class i2i:
             diffuser_pipe = self.pipe.get_pipe()
 
             prompt_embeds, negative_prompt_embeds = self.get_prompt_embeddings(diffuser_pipe,prompt,negative_prompt,device = self.device_name)
-            use_prompt_embeddings = True
+            use_prompt_embeddings = False
             start_idx = 0
             seeds = [random.randint(0,99999) for i in range(start_idx , start_idx + batch_size, 1)]
 
@@ -28,8 +28,12 @@ class i2i:
             guidance_scale = guidance_scale
             width  = width
             height = height
-            sm = selected_model.split("\\")[1]
-            sm = sm.split(".")[0]
+            sm="runwayml/stable-diffusion-v1-5"
+            if selected_model!=sm:
+                sm = selected_model.split("\\")[1]
+                sm = sm.split(".")[0]
+            else:
+                sm = selected_model.split("/")[1]
             info = {
                 "model":sm,
                 "prompt":prompt,
