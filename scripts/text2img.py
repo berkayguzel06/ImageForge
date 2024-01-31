@@ -12,10 +12,10 @@ class t2i:
         self.device_name = self.pipe.device_name
         self.torch_dtype = self.pipe.torch_dtype
 
-    def generate_image(self, selected_model, prompt, batch_size, num_inference_steps, guidance_scale, negative_prompt, width, height, clip_skip):
+    def generate_image(self, scheduler, selected_model, prompt, batch_size, num_inference_steps, guidance_scale, negative_prompt, width, height, clip_skip):
             pipe_type = "t2i"
 
-            self.pipe.system_check(pipe_type, clip_skip, selected_model)
+            self.pipe.system_check(pipe_type, clip_skip, selected_model, scheduler)
             diffuser_pipe = self.pipe.get_pipe()
 
             prompt_embeds, negative_prompt_embeds = self.get_prompt_embeddings(diffuser_pipe,prompt,negative_prompt,device = self.device_name)
@@ -34,8 +34,13 @@ class t2i:
                 sm = sm.split(".")[0]
             else:
                 sm = selected_model.split("/")[1]
+
+            sch = str(scheduler).split("'")[1]
+            sch = sch.split(".")[3]
+            
             info = {
                 "model":sm,
+                "scheduler":sch,
                 "prompt":prompt,
                 "negative_prompt":negative_prompt,
                 "num_inference_steps":num_inference_steps,

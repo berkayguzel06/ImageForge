@@ -90,18 +90,29 @@ class pipeline:
         return text_encoder
 
     def _set_scheduler(self):
-        self.pipe.scheduler = diffusers.EulerAncestralDiscreteScheduler.from_config(
-            self.pipe.scheduler.config
-        )
+        if self.scheduler=="":
+            self.pipe.scheduler = diffusers.EulerAncestralDiscreteScheduler.from_config(
+                self.pipe.scheduler.config
+            )
+        else:
+            self.pipe.scheduler = self.scheduler.from_config(
+                self.pipe.scheduler.config
+            )
+        self.scheduler = self.pipe.scheduler
+    
+    def get_schedulers(self):
+        return self.pipe.scheduler.compatibles
 
     def setup_system(self):
         self.text_encoder = self._create_text_encoder()
         self.pipe = self._create_pipe()
         self.pipe = self.pipe.to(self.device_name)
 
-    def system_check(self, pipe_type, clip_skip, selected_model):
+    def system_check(self, pipe_type, clip_skip, selected_model, scheduler):
         check_flag = False
-
+        if scheduler!=self.scheduler:
+            self.scheduler=scheduler
+            self._set_scheduler()
         if self.clip_skip!=clip_skip:
             self.clip_skip = clip_skip
             check_flag=True
@@ -114,6 +125,7 @@ class pipeline:
 
         if check_flag:
             self.setup_system()
+            self._set_scheduler()
 
     def get_pipe(self):
         return self.pipe
