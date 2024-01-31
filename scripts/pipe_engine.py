@@ -15,7 +15,7 @@ class pipeline:
         if self._initialized:
             return
         self._initialized = True
-
+        self.lora = " "
         self.pipe_type = "t2i"
         self.device_name = ""
         self.torch_dtype = ""
@@ -78,6 +78,8 @@ class pipeline:
                     torch_dtype = self.torch_dtype,
                     safety_checker = None
                 )
+        if self.lora!=" ":
+            pipe.load_lora_weights(self.lora)
         return pipe
     
     def _create_text_encoder(self):
@@ -108,8 +110,11 @@ class pipeline:
         self.pipe = self._create_pipe()
         self.pipe = self.pipe.to(self.device_name)
 
-    def system_check(self, pipe_type, clip_skip, selected_model, scheduler):
+    def system_check(self, pipe_type, clip_skip, selected_model, scheduler, lora):
         check_flag = False
+        if lora!=self.lora:
+            self.lora = lora
+            check_flag=True
         if scheduler!=self.scheduler:
             self.scheduler=scheduler
             self._set_scheduler()

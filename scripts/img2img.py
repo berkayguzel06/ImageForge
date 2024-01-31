@@ -12,10 +12,10 @@ class i2i:
         self.device_name = self.pipe.device_name
         self.torch_dtype = self.pipe.torch_dtype
 
-    def generate_image(self, scheduler, image, selected_model, prompt, batch_size, num_inference_steps, guidance_scale, negative_prompt, width, height, clip_skip, strength):
+    def generate_image(self, lora, lora_weight, scheduler, image, selected_model, prompt, batch_size, num_inference_steps, guidance_scale, negative_prompt, width, height, clip_skip, strength):
             pipe_type = "i2i"
             
-            self.pipe.system_check(pipe_type, clip_skip, selected_model, scheduler)
+            self.pipe.system_check(pipe_type, clip_skip, selected_model, scheduler, lora)
             diffuser_pipe = self.pipe.get_pipe()
 
             prompt_embeds, negative_prompt_embeds = self.get_prompt_embeddings(diffuser_pipe,prompt,negative_prompt,device = self.device_name)
@@ -62,6 +62,7 @@ class i2i:
                         num_inference_steps = num_inference_steps,
                         num_images_per_prompt = 1,
                         strength=strength,
+                        cross_attention_kwargs={"scale":lora_weight},
                         generator = torch.manual_seed(seed),
                     ).images
                 else:
