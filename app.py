@@ -24,6 +24,9 @@ def find_schedulers(scheduler):
 schedulers = content.get_schedulers(text2img.pipe.get_schedulers())
 converted, safetensor, lora = content.get_selections()
 
+def get_png_info(image):
+    return img_conv.read_png_info(image)
+
 def generate_image(lora_model, lora_weight, scheduler, selected_model, prompt, negative_prompt, clip_skip, batch_size, num_inference_steps, guidance_scale, width, height):
     print(selected_model)
     sch = find_schedulers(scheduler)
@@ -125,8 +128,14 @@ with gr.Blocks(title="ImageForge") as interface:
             with gr.Blocks():
                 safetensor_model = gr.Dropdown(safetensor, label="Safetensors", info="You can select a model to turn diffusers")
                 convert_button = gr.Button(value="Convert")
-    
-    convert_button.click(convert_model, inputs=safetensor_model)
+            convert_button.click(convert_model, inputs=safetensor_model)
+        
+        with gr.TabItem("PNG Info"):
+            png_info = gr.Button(value="Get")      
+            with gr.Row():
+                png = gr.Image(type="pil", height="30vw")
+                info = gr.Textbox(placeholder="PNG Info",show_label=False)
+            png_info.click(get_png_info, inputs=[png], outputs=info)
 
     live=True
 
