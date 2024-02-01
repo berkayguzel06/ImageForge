@@ -2,8 +2,6 @@ import diffusers
 import transformers
 import random
 import torch
-import matplotlib.pyplot as plt
-import numpy as np
 from scripts.pipe_engine import pipeline
 
 class i2i:

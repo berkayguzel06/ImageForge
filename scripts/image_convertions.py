@@ -1,6 +1,6 @@
 import os
 from PIL import Image
-from PIL.PngImagePlugin import PngImageFile, PngInfo
+from PIL.PngImagePlugin import PngInfo
 
 def isOpen(image):
     if isinstance(image, Image.Image):
@@ -16,7 +16,6 @@ def change_size(image, width, height):
 
 def read_png_info(image):
     picture = isOpen(image)
-    print(picture.info)
     return picture.info
 
 def check_files():

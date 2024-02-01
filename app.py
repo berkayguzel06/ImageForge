@@ -1,4 +1,3 @@
-import os
 import gradio as gr
 from scripts.text2img import t2i
 from scripts.img2img import i2i
@@ -17,7 +16,6 @@ def find_schedulers(scheduler):
     for idx in range(len(schedulers)):
         result = str(schedulers[idx]).find(scheduler)
         if result != -1:
-            print(schedulers[idx])
             return schedulers[idx]
     return None
 
@@ -27,8 +25,8 @@ converted, safetensor, lora = content.get_selections()
 def get_png_info(image):
     return img_conv.read_png_info(image)
 
-def generate_image(lora_model, lora_weight, scheduler, selected_model, prompt, negative_prompt, clip_skip, batch_size, num_inference_steps, guidance_scale, width, height):
-    print(selected_model)
+def generate_image(lora_model, lora_weight, scheduler, selected_model, prompt, negative_prompt, 
+                   clip_skip, batch_size, num_inference_steps, guidance_scale, width, height):
     sch = find_schedulers(scheduler)
     images, seeds, info = text2img.generate_image(
         lora=lora_model,
@@ -47,8 +45,8 @@ def generate_image(lora_model, lora_weight, scheduler, selected_model, prompt, n
     img_conv.save_image(images, seeds, info, "t2i")
     return images
 
-def i2i_generate_image(lora_model, lora_weight, scheduler, selected_model, prompt, negative_prompt, clip_skip, batch_size, num_inference_steps, guidance_scale, width, height, strength, image):
-    print(selected_model)
+def i2i_generate_image(lora_model, lora_weight, scheduler, selected_model, prompt, negative_prompt, 
+                       clip_skip, batch_size, num_inference_steps, guidance_scale, width, height, strength, image):
     picture = img_conv.change_size(image, width, height)
     sch = find_schedulers(scheduler)
     images, seeds, info = img2img.generate_image(
@@ -71,12 +69,11 @@ def i2i_generate_image(lora_model, lora_weight, scheduler, selected_model, promp
     return images
 
 def convert_model(safetensor_model):
-    print(safetensor_model)
     std.convert(model_path=safetensor_model)
 
 with gr.Blocks(title="ImageForge") as interface:
-    with gr.Blocks():
-        selected_model = gr.Dropdown(converted, value=converted[0], label="Models", info="You can select desired models here")
+    with gr.Row():
+        selected_model = gr.Dropdown(converted, value=converted[0], label="Models")
         lora_model = gr.Dropdown(lora, value=lora[0], label="LoRA")
         scheduler = gr.Dropdown(schedulers, value=schedulers[0], label="Schedulers")
     with gr.Tabs():
@@ -131,10 +128,10 @@ with gr.Blocks(title="ImageForge") as interface:
             convert_button.click(convert_model, inputs=safetensor_model)
         
         with gr.TabItem("PNG Info"):
-            png_info = gr.Button(value="Get")      
             with gr.Row():
                 png = gr.Image(type="pil", height="30vw")
                 info = gr.Textbox(placeholder="PNG Info",show_label=False)
+            png_info = gr.Button(value="Get")      
             png_info.click(get_png_info, inputs=[png], outputs=info)
 
     live=True

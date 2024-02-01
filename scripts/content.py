@@ -36,5 +36,4 @@ def get_schedulers(schedulers):
         scheduler = str(sch).split("'")[1]
         schdeuler = scheduler.split(".")[3]
         extract.append(schdeuler)
-    print(extract)
     return extract
