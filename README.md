@@ -1,10 +1,20 @@
 # ImageForge
-![image](https://github.com/berkayguzel06/ImageForge/assets/98205992/63136c33-d867-4553-8d5f-dbf9d0aeeb76)
+## Text2Img
+![t2i_1](https://github.com/berkayguzel06/ImageForge/assets/98205992/58a63d86-7a1f-461c-95fa-439649b6a63f)
+
+## Img2Img
+![i2i_1](https://github.com/berkayguzel06/ImageForge/assets/98205992/a4ff3692-6c2e-4b67-9857-062fc173dda3)
+
+## PNG info extract
+![png_info_1](https://github.com/berkayguzel06/ImageForge/assets/98205992/1f53fdbd-3b6f-4bd9-950d-d639534bf0fe)
 
 ## Features
 
 - Supports CUDA devices for accelerated processing.
-- Original txt2img mode.
+- txt2img and img2img mode.
+- Supports for single LoRA.
+- Supports for different scheduler types.
+- Extract PNG image info from generated images.
 - One click install and run script (but you still must install python and git)
 - Utilizes Hugging Face Diffusers and Transformers libraries for AI models.
 - Employs the Gradio library for the user interface.
